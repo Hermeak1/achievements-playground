@@ -58,3 +58,17 @@ git stash apply stash@{1} # 특정 항목을 꺼내되 목록에는 남김
 ```
 
 `pop`은 충돌이 나면 스태시가 목록에 남으니, 충돌을 해결한 뒤 `git stash drop`으로 직접 지워야 한다.
+
+## rebase와 merge의 차이
+
+`git merge`는 두 갈래를 합치는 커밋을 하나 새로 만든다. 히스토리에 갈라졌다 합쳐진 모양이 그대로 남는다.
+
+`git rebase`는 내 커밋들을 대상 브랜치 끝으로 옮겨 붙인다. 히스토리가 일직선이 되는 대신 커밋 해시가 전부 새로 생긴다.
+
+```bash
+git rebase main          # 현재 브랜치를 main 위로 옮김
+git rebase --abort       # 충돌 나면 되돌리기
+git merge --no-ff main   # 머지 커밋을 강제로 남기며 합치기
+```
+
+이미 푸시해서 남이 받아간 브랜치에는 rebase를 쓰지 않는다. 해시가 바뀌어 상대 쪽 히스토리와 어긋난다.

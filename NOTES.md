@@ -44,3 +44,17 @@ gh api -X PATCH user/repository_invitations/<id>  # 수락
 
 - Windows에서 `git push`가 `unable to get local issuer certificate`로 실패 → `git config http.sslBackend schannel`로 Windows 인증서 저장소를 쓰게 하면 해결. 검증을 끄는 게 아니라 CA 출처만 바꾸는 것이라 안전하다.
 - PowerShell에서 따옴표로 시작하는 경로를 실행할 땐 호출 연산자가 필요하다: `& "C:\경로\프로그램.exe" 인자`
+
+## 작업 중인 변경을 잠시 치워둘 때
+
+브랜치를 급히 바꿔야 하는데 커밋하기는 애매할 때 `stash`를 쓴다.
+
+```bash
+git stash                 # 변경사항을 치워두고 깨끗한 상태로
+git stash -u              # untracked 파일까지 포함
+git stash list            # 쌓아둔 목록
+git stash pop             # 가장 최근 것을 꺼내며 목록에서 제거
+git stash apply stash@{1} # 특정 항목을 꺼내되 목록에는 남김
+```
+
+`pop`은 충돌이 나면 스태시가 목록에 남으니, 충돌을 해결한 뒤 `git stash drop`으로 직접 지워야 한다.
